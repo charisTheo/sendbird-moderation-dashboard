@@ -30,6 +30,13 @@ const theme = createTheme({
           minWidth: 240,
         }
       }
+    },
+    MuiTableContainer: {
+      styleOverrides: {
+        root: {
+          marginBottom: '2rem',
+        }
+      }
     }
   }
 });

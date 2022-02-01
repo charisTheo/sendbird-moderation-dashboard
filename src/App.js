@@ -6,7 +6,7 @@ import routes from './routes';
 
 export default function App() {
   return (
-    <Container disableGutters={true}>
+    <Container disableGutters={true} maxWidth={false}>
       <Router>
         <Nav />
         <Routes>
