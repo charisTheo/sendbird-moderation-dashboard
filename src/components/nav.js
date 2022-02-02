@@ -12,9 +12,10 @@ import React, { useState } from 'react';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
 import routes from './../routes';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const NavItemsList = ({setOpen}) => {
+  const location = useLocation()
   const navigate = useNavigate()
 
   const onKeyDown = (event) => {
@@ -27,10 +28,15 @@ const NavItemsList = ({setOpen}) => {
   return (
     <List onKeyDown={onKeyDown}>
       {routes.map(({path, label, icon}) => (
-        <ListItem button key={path} onClick={() => {
-          navigate(path)
-          setOpen(false)
-        }}>
+        <ListItem
+          button
+          key={path}
+          selected={location.pathname === path}
+          onClick={() => {
+            navigate(path)
+            setOpen(false)
+          }}
+        >
           <ListItemIcon>
             {icon}
           </ListItemIcon>
@@ -47,8 +53,8 @@ const Nav = () => {
 
   return (
     <React.Fragment>
-      <AppBar position="sticky">
-        <IconButton onClick={() => setOpen(!open)}>
+      <AppBar sx={{px: '1rem'}} position="sticky">
+        <IconButton color='inherit' onClick={() => setOpen(!open)}>
           <MenuIcon />
         </IconButton>
       </AppBar>
@@ -58,7 +64,7 @@ const Nav = () => {
         onClose={() => setOpen(false)}
       >
         <div style={{textAlign: 'right'}}>
-          <IconButton onClick={() => setOpen(false)}>
+          <IconButton color='primary' onClick={() => setOpen(false)}>
             <ChevronLeftIcon />
           </IconButton>
         </div>

@@ -8,12 +8,12 @@ export default [
     path: '/login',
     component: LoginPage,
     label: 'Login',
-    icon: <LoginIcon />
+    icon: <LoginIcon color="primary" />
   },
   {
     path: '/',
     component: HomePage,
     label: 'Home',
-    icon: <HomeIcon />
+    icon: <HomeIcon color="primary" />
   },
 ]

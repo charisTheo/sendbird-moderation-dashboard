@@ -5,10 +5,10 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      main: '#6210CC',
     },
     secondary: {
-      main: '#19857b',
+      main: '#ff5722',
     },
     error: {
       main: red.A400,
@@ -20,9 +20,10 @@ const theme = createTheme({
         root: {
           alignItems: 'flex-start',
           minHeight: 60,
-          justifyContent: 'center'
-        }
-      }
+          justifyContent: 'center',
+          color: '#fff',
+        },
+      },
     },
     MuiDrawer: {
       styleOverrides: {
@@ -31,13 +32,6 @@ const theme = createTheme({
         }
       }
     },
-    MuiTableContainer: {
-      styleOverrides: {
-        root: {
-          marginBottom: '2rem',
-        }
-      }
-    }
   }
 });
 
