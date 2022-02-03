@@ -7,11 +7,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
-import { Chip, Link, Typography } from '@mui/material';
+import { Chip, CircularProgress, Link, Typography } from '@mui/material';
 import Moment from 'react-moment';
 import { getLinkToGroupChannel, getLinkToUser } from '../utils';
 
-const ReportsTable = ({type, data}) => {
+const ReportsTable = ({type, data, isLoading}) => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -35,7 +35,7 @@ const ReportsTable = ({type, data}) => {
       </Typography>
 
       <TableContainer component={Paper} elevation={3} sx={{mb: '2rem'}}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
               <TableCell>Reported by</TableCell>
@@ -50,36 +50,46 @@ const ReportsTable = ({type, data}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((report, i) => (
-              <TableRow
-                key={'report-' + i}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <Link target="_blank" href={getLinkToUser(report.reporting_user?.user_id)}>
-                  {report.reporting_user?.user_id}
-                  </Link>
-                </TableCell>
-                <TableCell align="right">
-                  {type === 'channel'
-                    ? <Link target="_blank" href={getLinkToGroupChannel(report.channel.channel_url)}>
-                        {report.channel.name}
-                      </Link>
-                    : <Link target="_blank" href={getLinkToUser(report.offending_user?.user_id)}>
-                        {report.offending_user?.user_id}
-                      </Link>
-                    }
-                </TableCell>
-                <TableCell align="right"><Moment>{report.created_at * 1000}</Moment></TableCell>
-                <TableCell align="right">
-                  <Chip label={report.report_category} color="secondary" variant="outlined" />
-                </TableCell>
-                {/* TODO make row expandable and show full description */}
-                <TableCell align="right">"<i>{report.report_description}</i>"</TableCell>
-              </TableRow>
-            ))}
+            {!isLoading && data.map((report, i) => (
+                <TableRow
+                  key={'report-' + i}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    <Link target="_blank" href={getLinkToUser(report.reporting_user?.user_id)}>
+                    {report.reporting_user?.user_id}
+                    </Link>
+                  </TableCell>
+                  <TableCell align="right">
+                    {type === 'channel'
+                      ? <Link target="_blank" href={getLinkToGroupChannel(report.channel.channel_url)}>
+                          {report.channel.name}
+                        </Link>
+                      : <Link target="_blank" href={getLinkToUser(report.offending_user?.user_id)}>
+                          {report.offending_user?.user_id}
+                        </Link>
+                      }
+                  </TableCell>
+                  <TableCell align="right"><Moment>{report.created_at * 1000}</Moment></TableCell>
+                  <TableCell align="right">
+                    <Chip label={report.report_category} color="secondary" variant="outlined" />
+                  </TableCell>
+                  {/* TODO make row expandable and show full description */}
+                  <TableCell align="right">"<i>{report.report_description}</i>"</TableCell>
+                </TableRow>
+              ))
+            }
           </TableBody>
         </Table>
+
+        {isLoading
+          && <CircularProgress
+              color='primary'
+              sx={{m: '2rem auto 0'}}
+              style={{display: 'block'}}
+            />
+        }
+
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"

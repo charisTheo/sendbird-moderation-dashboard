@@ -11,12 +11,14 @@ const HomePage = () => {
   const [reports, setReports] = useState([]);
   const [category, setCategory] = useState(null);
   const [dateRange, setDateRange] = useState({from: null, to: null});
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchReports = useCallback(async () => {
     if (!auth) {
       return;
     }
     const reportLogs = []
+    setIsLoading(true)
 
     return new Promise((resolve) => {
       async function getReports(_next = '') {
@@ -39,6 +41,7 @@ const HomePage = () => {
         if (next) {
           getReports(next)
         } else {
+          setIsLoading(false)
           resolve(reportLogs)
         }
       }
@@ -68,9 +71,9 @@ const HomePage = () => {
   return (
     <PageContainer title='Home page'>
       <Filters onDateRangeSelect={setDateRange} onCategorySelect={setCategory} />
-      <ReportsTable type={'user'} data={user} />
-      <ReportsTable type={'message'} data={message} />
-      <ReportsTable type={'channel'} data={channel} />
+      <ReportsTable isLoading={isLoading} type={'user'} data={user} />
+      <ReportsTable isLoading={isLoading} type={'message'} data={message} />
+      <ReportsTable isLoading={isLoading} type={'channel'} data={channel} />
     </PageContainer>
   );
 };
