@@ -11,7 +11,7 @@ export default function App() {
       maxWidth={false}
       classes={{root: 'app-container'}}
     >
-      <Router>
+      <Router basename={process.env.PUBLIC_URL || ''}>
         <Nav />
         <Routes>
           {routes.map(route => (

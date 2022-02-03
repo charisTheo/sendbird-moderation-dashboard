@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/static/js/main.27cce1f8.js",
-    "index.html": "/index.html",
-    "main.27cce1f8.js.map": "/static/js/main.27cce1f8.js.map"
+    "main.js": "/sendbird-moderation-dashboard/static/js/main.4682b114.js",
+    "index.html": "/sendbird-moderation-dashboard/index.html",
+    "main.4682b114.js.map": "/sendbird-moderation-dashboard/static/js/main.4682b114.js.map"
   },
   "entrypoints": [
-    "static/js/main.27cce1f8.js"
+    "static/js/main.4682b114.js"
   ]
 }
