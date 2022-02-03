@@ -2,7 +2,8 @@
  * @returns {Boolean}
  */
 export function isLoggedIn() {
-  return localStorage.getItem('auth') !== null
+  const auth = getLoginDetails()
+  return Boolean(auth && auth.appId && auth.apiToken)
 }
 
 export function logout() {

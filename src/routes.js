@@ -6,13 +6,13 @@ import HomeIcon from '@mui/icons-material/Home';
 export default [
   {
     path: '/login',
-    component: LoginPage,
+    component: () => <LoginPage />,
     label: 'Login',
     icon: <LoginIcon color="primary" />
   },
   {
     path: '/',
-    component: HomePage,
+    component: () => <HomePage />,
     label: 'Home',
     icon: <HomeIcon color="primary" />
   },

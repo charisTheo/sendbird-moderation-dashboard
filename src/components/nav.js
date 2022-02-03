@@ -11,8 +11,10 @@ import {
 import React, { useState } from 'react';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
+import { ExitToApp } from '@mui/icons-material';
 import routes from './../routes';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { isLoggedIn, logout } from '../utils';
 
 const NavItemsList = ({setOpen}) => {
   const location = useLocation()
@@ -27,21 +29,39 @@ const NavItemsList = ({setOpen}) => {
 
   return (
     <List onKeyDown={onKeyDown}>
-      {routes.map(({path, label, icon}) => (
+      {isLoggedIn() &&
         <ListItem
           button
-          key={path}
-          selected={location.pathname === path}
+          key={'logout'}
           onClick={() => {
-            navigate(path)
+            logout()
+            navigate('/login')
             setOpen(false)
           }}
         >
           <ListItemIcon>
-            {icon}
+            <ExitToApp />
           </ListItemIcon>
-          <ListItemText primary={label} />
+          <ListItemText primary={'Logout'} />
         </ListItem>
+      }
+      {routes.map(({path, label, icon}) => (
+        isLoggedIn() && path === '/login'
+        ? <React.Fragment key='-'></React.Fragment>
+        : <ListItem
+            button
+            key={path}
+            selected={location.pathname === path}
+            onClick={() => {
+              navigate(path)
+              setOpen(false)
+            }}
+          >
+            <ListItemIcon>
+              {icon}
+            </ListItemIcon>
+            <ListItemText primary={label} />
+          </ListItem>
       ))}
     </List>
   )
@@ -49,7 +69,6 @@ const NavItemsList = ({setOpen}) => {
 
 const Nav = () => {
   const [open, setOpen] = useState(false);
-
 
   return (
     <React.Fragment>

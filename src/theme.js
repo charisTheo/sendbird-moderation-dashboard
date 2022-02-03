@@ -1,6 +1,8 @@
 import { red } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
+const APP_BAR_HEIGHT = 64
+
 // A custom theme for this app
 const theme = createTheme({
   palette: {
@@ -19,11 +21,23 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           alignItems: 'flex-start',
-          minHeight: 60,
+          height: APP_BAR_HEIGHT,
           justifyContent: 'center',
           color: '#fff',
         },
       },
+    },
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          '&.app-container': {
+            minHeight: '100vh'
+          },
+          '&.page-container': {
+            minHeight: `calc(100vh - ${APP_BAR_HEIGHT}px)`
+          }
+        }
+      }
     },
     MuiDrawer: {
       styleOverrides: {

@@ -6,7 +6,11 @@ import routes from './routes';
 
 export default function App() {
   return (
-    <Container disableGutters={true} maxWidth={false}>
+    <Container
+      disableGutters={true}
+      maxWidth={false}
+      classes={{root: 'app-container'}}
+    >
       <Router>
         <Nav />
         <Routes>
