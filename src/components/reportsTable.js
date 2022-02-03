@@ -7,7 +7,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
+import { Chip, Link, Typography } from '@mui/material';
+import Moment from 'react-moment';
+import { getLinkToGroupChannel, getLinkToUser } from '../utils';
 
 const ReportsTable = ({type, data}) => {
   const [page, setPage] = useState(0)
@@ -37,7 +39,11 @@ const ReportsTable = ({type, data}) => {
           <TableHead>
             <TableRow>
               <TableCell>Reported by</TableCell>
-              <TableCell align="right">Reported user</TableCell>
+              <TableCell align="right">
+                {type === 'channel'
+                  ? 'Reported Channel'
+                  : 'Reported user'}
+              </TableCell>
               <TableCell align="right">Created at</TableCell>
               <TableCell align="right">Category</TableCell>
               <TableCell align="right">Description</TableCell>
@@ -50,11 +56,25 @@ const ReportsTable = ({type, data}) => {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
+                  <Link target="_blank" href={getLinkToUser(report.reporting_user?.user_id)}>
                   {report.reporting_user?.user_id}
+                  </Link>
                 </TableCell>
-                <TableCell align="right">{report.offending_user?.user_id}</TableCell>
-                <TableCell align="right">{report.created_at}</TableCell>
-                <TableCell align="right">{report.report_category}</TableCell>
+                <TableCell align="right">
+                  {type === 'channel'
+                    ? <Link target="_blank" href={getLinkToGroupChannel(report.channel.channel_url)}>
+                        {report.channel.name}
+                      </Link>
+                    : <Link target="_blank" href={getLinkToUser(report.offending_user?.user_id)}>
+                        {report.offending_user?.user_id}
+                      </Link>
+                    }
+                </TableCell>
+                <TableCell align="right"><Moment>{report.created_at * 1000}</Moment></TableCell>
+                <TableCell align="right">
+                  <Chip label={report.report_category} color="secondary" variant="outlined" />
+                </TableCell>
+                {/* TODO make row expandable and show full description */}
                 <TableCell align="right">"<i>{report.report_description}</i>"</TableCell>
               </TableRow>
             ))}
