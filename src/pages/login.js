@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import PageContainer from '../components/pageContainer';
 import { isLoggedIn, setLoginDetails } from '../utils';
 
-const LoginPage = () => {
+const LoginPage = ({ title }) => {
   const navigate = useNavigate();
   const [appId, setAppId] = useState('');
   const [apiToken, setApiToken] = useState('');
@@ -49,7 +49,7 @@ const LoginPage = () => {
   }, [error])
 
   return (
-    <PageContainer title='Login page'>
+    <PageContainer title={title}>
         <Alert
           severity="error"
           color="error"

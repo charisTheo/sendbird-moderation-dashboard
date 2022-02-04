@@ -1,19 +1,19 @@
 import HomePage from "./pages/home";
 import LoginPage from "./pages/login";
 import LoginIcon from '@mui/icons-material/Login';
-import HomeIcon from '@mui/icons-material/Home';
+import ReportIcon from '@mui/icons-material/ReportGmailerrorred';
 
 export default [
   {
     path: '/login',
-    component: () => <LoginPage />,
+    component: () => <LoginPage title="Login" />,
     label: 'Login',
     icon: <LoginIcon color="primary" />
   },
   {
     path: '/',
-    component: () => <HomePage />,
-    label: 'Home',
-    icon: <HomeIcon color="primary" />
+    component: () => <HomePage title="Reports dashboard" />,
+    label: 'Reports dashboard',
+    icon: <ReportIcon color="primary" />
   },
 ]

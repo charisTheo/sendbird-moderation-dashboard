@@ -20,9 +20,10 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          alignItems: 'flex-start',
+          alignItems: 'center',
+          flexDirection: 'row',
           height: APP_BAR_HEIGHT,
-          justifyContent: 'center',
+          justifyContent: 'space-between',
           color: '#fff',
         },
       },
@@ -46,6 +47,28 @@ const theme = createTheme({
         }
       }
     },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          maxWidth: 180,
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }
+      }
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          '&[target="_blank"]::after': {
+            content: '"↗"',
+            display: 'inline-block',
+            paddingLeft: 1,
+            textDecoration: 'inherit'
+          }
+        }
+      }
+    }
   }
 });
 

@@ -6,7 +6,7 @@ import { getLoginDetails } from '../utils';
 
 const PAGINATION = 10
 
-const HomePage = () => {
+const HomePage = ({ title }) => {
   const auth = getLoginDetails()
   const [reports, setReports] = useState([]);
   const [category, setCategory] = useState(null);
@@ -69,7 +69,7 @@ const HomePage = () => {
   }, {user: [], message: [], channel: []})
 
   return (
-    <PageContainer title='Home page'>
+    <PageContainer title={title}>
       <Filters onDateRangeSelect={setDateRange} onCategorySelect={setCategory} />
       <ReportsTable isLoading={isLoading} type={'user'} data={user} />
       <ReportsTable isLoading={isLoading} type={'message'} data={message} />

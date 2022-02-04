@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,9 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
-import { Chip, CircularProgress, Link, Typography } from '@mui/material';
-import Moment from 'react-moment';
-import { getLinkToGroupChannel, getLinkToUser } from '../utils';
+import { CircularProgress, Typography } from '@mui/material';
+import ReportTableRow from './reportTableRow';
 
 const ReportsTable = ({type, data, isLoading}) => {
   const [page, setPage] = useState(0)
@@ -38,47 +37,18 @@ const ReportsTable = ({type, data, isLoading}) => {
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
+              <TableCell />
               <TableCell>Reported by</TableCell>
-              <TableCell align="right">
-                {type === 'channel'
-                  ? 'Reported Channel'
-                  : 'Reported user'}
-              </TableCell>
-              <TableCell align="right">Created at</TableCell>
-              <TableCell align="right">Category</TableCell>
-              <TableCell align="right">Description</TableCell>
+              <TableCell>{type === 'channel' ? 'Reported Channel' : 'Reported user'}</TableCell>
+              <TableCell>Created at</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell>Description</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {!isLoading && data.map((report, i) => (
-                <TableRow
-                  key={'report-' + i}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    <Link target="_blank" href={getLinkToUser(report.reporting_user?.user_id)}>
-                    {report.reporting_user?.user_id}
-                    </Link>
-                  </TableCell>
-                  <TableCell align="right">
-                    {type === 'channel'
-                      ? <Link target="_blank" href={getLinkToGroupChannel(report.channel.channel_url)}>
-                          {report.channel.name}
-                        </Link>
-                      : <Link target="_blank" href={getLinkToUser(report.offending_user?.user_id)}>
-                          {report.offending_user?.user_id}
-                        </Link>
-                      }
-                  </TableCell>
-                  <TableCell align="right"><Moment>{report.created_at * 1000}</Moment></TableCell>
-                  <TableCell align="right">
-                    <Chip label={report.report_category} color="secondary" variant="outlined" />
-                  </TableCell>
-                  {/* TODO make row expandable and show full description */}
-                  <TableCell align="right">"<i>{report.report_description}</i>"</TableCell>
-                </TableRow>
-              ))
-            }
+            {!isLoading && data.slice(rowsPerPage * page, rowsPerPage * page + rowsPerPage).map((r, i) =>
+              <ReportTableRow key={'report-' + i} report={r} type={type} />
+            )}
           </TableBody>
         </Table>
 

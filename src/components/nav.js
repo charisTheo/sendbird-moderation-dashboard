@@ -3,6 +3,7 @@ import {
   Divider,
   Drawer,
   IconButton,
+  Link,
   List,
   ListItem,
   ListItemIcon,
@@ -15,6 +16,7 @@ import { ExitToApp } from '@mui/icons-material';
 import routes from './../routes';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { isLoggedIn, logout } from '../utils';
+import SBLogo from './../img/sendbird-logo.svg'
 
 const NavItemsList = ({setOpen}) => {
   const location = useLocation()
@@ -76,6 +78,19 @@ const Nav = () => {
         <IconButton color='inherit' onClick={() => setOpen(!open)}>
           <MenuIcon />
         </IconButton>
+
+        <Link target="_blank" href="https://sendbird.com/">
+          <img
+            src={SBLogo}
+            height={60}
+            width={120}
+            style={{
+              objectFit: 'cover',
+              verticalAlign: 'middle',
+              filter: 'drop-shadow(3px 3px 2px rgba(0, 0, 0, .5))'
+            }}
+          />
+        </Link>
       </AppBar>
       <Drawer
         anchor='left'
