@@ -30,7 +30,7 @@ const ReportsTable = ({type, data, isLoading}) => {
         component="h2"
         gutterBottom
       >
-        {type[0].toUpperCase() + type.substring(1, type.length)} reports table
+        {type[0].toUpperCase() + type.substring(1, type.length)} reports
       </Typography>
 
       <TableContainer component={Paper} elevation={3} sx={{mb: '2rem'}}>

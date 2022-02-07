@@ -54,7 +54,7 @@ const ReportTableRow = ({ type, report }) => {
         </TableCell>
         <TableCell><Moment>{report.created_at * 1000}</Moment></TableCell>
         <TableCell>
-          <Chip label={report.report_category} color="secondary" variant="outlined" />
+          <Chip label={report.report_category} color="secondary" variant="filled" />
         </TableCell>
         <TableCell>"<i>{report.report_description}</i>"</TableCell>
       </TableRow>
@@ -77,26 +77,14 @@ const ReportTableRow = ({ type, report }) => {
                   }
                 </Typography>
                 {report.reported_message?.message && (
-                  <blockquote style={{
-                    backgroundColor: '#f9f9f9',
-                    borderLeft: '5px solid #ccc',
-                    padding: '1rem 2rem',
-                  }}>
-                    {report.reported_message.message}
-                  </blockquote>
+                  <blockquote>{report.reported_message.message}</blockquote>
                 )}
               </>
             )}
             <Typography variant="h5" component='h3' sx={{mt: 2, mb: 1}}>
               Description:
             </Typography>
-            <blockquote style={{
-              backgroundColor: '#f9f9f9',
-              borderLeft: '5px solid #ccc',
-              padding: '1rem 2rem',
-            }}>
-              {report.report_description}
-            </blockquote>
+            <blockquote>{report.report_description}</blockquote>
             <Grid container sx={{m: 2}} spacing={2} justifyContent='center'>
               <Grid item>
                 <MuteButton user={report.offending_user} channel={report.channel} />
@@ -104,9 +92,11 @@ const ReportTableRow = ({ type, report }) => {
               <Grid item>
                 <BanButton user={report.offending_user} channel={report.channel} />
               </Grid>
-              <Grid item>
-                <DeleteMessageButton message={report.reported_message} channel={report.channel} />
-              </Grid>
+              {report.reported_message && (
+                <Grid item>
+                  <DeleteMessageButton message={report.reported_message} channel={report.channel} />
+                </Grid>
+              )}
               <Grid item>
                 <FreezeButton channel={report.channel} />
               </Grid>

@@ -12,6 +12,8 @@ import {
 import React, { useState } from 'react';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { ExitToApp } from '@mui/icons-material';
 import routes from './../routes';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -69,7 +71,7 @@ const NavItemsList = ({setOpen}) => {
   )
 }
 
-const Nav = () => {
+const Nav = ({ toggleTheme, themeMode }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -77,6 +79,12 @@ const Nav = () => {
       <AppBar sx={{px: '1rem'}} position="sticky">
         <IconButton color='inherit' onClick={() => setOpen(!open)}>
           <MenuIcon />
+        </IconButton>
+
+        <div style={{flex: 1}} />
+
+        <IconButton color='inherit' onClick={toggleTheme} sx={{mr: 2}}>
+          {themeMode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
         </IconButton>
 
         <Link target="_blank" href="https://sendbird.com/">
