@@ -11,6 +11,7 @@ import {
   Typography
 } from '@mui/material';
 import Moment from 'react-moment';
+import { Link as RouterLink } from 'react-router-dom'
 import { getLinkToGroupChannel, getLinkToUser } from '../utils';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -71,7 +72,8 @@ const ReportTableRow = ({ type, report }) => {
                 <Button
                   type="link"
                   variant="contained"
-                  href={`profanity/${report.channel.channel_url}`}
+                  component={RouterLink}
+                  to={`profanity/${report.channel.channel_url}`}
                 >
                   Channel profanities
                 </Button>
