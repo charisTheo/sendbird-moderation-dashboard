@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Button,
   Chip,
   Collapse,
   Grid,
@@ -62,13 +63,31 @@ const ReportTableRow = ({ type, report }) => {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            {type !== 'channel' && (
-              <Typography variant="h5" component='h3' sx={{mt: 2, mb: 1}}>
-                Channel: <Link target="_blank" href={getLinkToGroupChannel(report.channel.channel_url)}>
-                  {report.channel.name}
-                </Link>
-              </Typography>
-            )}
+            <Typography variant="h5" component='h3' sx={{mt: 2, mb: 1}}>
+              Channel name: <i>"{report.channel.name}"</i>
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item>
+                <Button
+                  type="link"
+                  variant="contained"
+                  href={`profanity/${report.channel.channel_url}`}
+                >
+                  Channel profanities
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  type="link"
+                  variant="contained"
+                  target="_blank"
+                  href={getLinkToGroupChannel(report.channel.channel_url)}
+                >
+                  View channel↗
+                </Button>
+              </Grid>
+            </Grid>
+
             {type === 'message' && (
               <>
                 <Typography variant="h5" component='h3' sx={{mt: 2, mb: 1}}>
