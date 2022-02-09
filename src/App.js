@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,11 +7,14 @@ import { getTheme } from './theme';
 import Nav from './components/nav';
 import routes from './routes';
 
-const preferredColorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+const preferredColorScheme = localStorage.getItem('theme-scheme')
+  ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
 
 export default function App() {
   const [mode, setMode] = useState(preferredColorScheme);
   const theme = useMemo(() => getTheme(mode), [mode])
+
+  useEffect(() => localStorage.setItem('theme-scheme', mode), [mode])
 
   const onToggleTheme = () => setMode(mode === 'light' ? 'dark' : 'light')
 
