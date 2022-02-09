@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/sendbird-moderation-dashboard/static/js/main.47b87d12.js",
+    "main.js": "/sendbird-moderation-dashboard/static/js/main.4c558cf8.js",
     "static/media/sendbird-logo.svg": "/sendbird-moderation-dashboard/static/media/sendbird-logo.c477b689f6520c2749f96a722032c869.svg",
     "index.html": "/sendbird-moderation-dashboard/index.html",
-    "main.47b87d12.js.map": "/sendbird-moderation-dashboard/static/js/main.47b87d12.js.map"
+    "main.4c558cf8.js.map": "/sendbird-moderation-dashboard/static/js/main.4c558cf8.js.map"
   },
   "entrypoints": [
-    "static/js/main.47b87d12.js"
+    "static/js/main.4c558cf8.js"
   ]
 }
