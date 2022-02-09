@@ -27,7 +27,20 @@ export default function App() {
           <Nav toggleTheme={onToggleTheme} themeMode={mode} />
           <Routes>
             {routes.map(route => (
-              <Route key={route.path} path={route.path} exact element={route.component()} />
+              <React.Fragment key={route.path}>
+                <Route
+                  path={route.path + (route.params ? `/:${route.params.join('/:')}` : '')}
+                  exact={route.exact}
+                  element={route.component()}
+                />
+                {route.params && (
+                  <Route
+                    path={route.path}
+                    exact={route.exact}
+                    element={route.component()}
+                  />
+                )}
+              </React.Fragment>
             ))}
           </Routes>
         </Router>
