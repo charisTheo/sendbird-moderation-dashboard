@@ -3,17 +3,18 @@ const APP_ID = process.env.APP_ID
 const API_TOKEN = process.env.API_TOKEN
 
 module.exports.getBan = async (req, res) => {
-  const { userId, channelUrl } = req.query
+  const { userId, channelUrl, type } = req.query
 
   try {
-    const response = await fetch(`https://api-${APP_ID}.sendbird.com/v3/group_channels/${channelUrl}/ban/${userId}`, {
+    const response = await fetch(`https://api-${APP_ID}.sendbird.com/v3/${type}/${channelUrl}/ban/${userId}`, {
       method: 'GET',
       headers: { 'Api-Token': API_TOKEN }
     })
-    if (response.status === 200) {
-      res.status(200).send({ isBanned: true });
-    } else if (response.status === 400) {
+    const data = await response.json();
+    if (response.status === 400 || !data.user) {
       res.status(200).send({ isBanned: false });
+    } else if (response.status === 200 && data.user) {
+      res.status(200).send({ isBanned: true });
     } else {
       throw new Error('Error while checking ban status')
     }
@@ -23,26 +24,34 @@ module.exports.getBan = async (req, res) => {
 }
 
 module.exports.ban = async (req, res) => {
-  const { isBanned, userId, channelUrl } = req.body
+  const { isBanned, userId, type, channelUrl } = req.body
 
   try {
-    const response = await fetch(`https://api-${APP_ID}.sendbird.com/v3/group_channels/${channelUrl}/ban${isBanned ? `/${userId}` : ''}`, {
+    const response = await fetch(`https://api-${APP_ID}.sendbird.com/v3/${type}/${channelUrl}/ban${isBanned ? `/${userId}` : ''}`, {
       method: isBanned ? 'DELETE' : 'POST',
       headers: { 'Api-Token': API_TOKEN },
       body: isBanned ? undefined : JSON.stringify({ user_id: userId })
     });
+
     const data = await response.json();
-    res.status(response.status).send({ ...data, isBanned: response.status === 200 ? !isBanned : isBanned })
+    if (response.status === 200) {
+      res.status(200).send({ ...data, isBanned: !isBanned })
+    } else if (response.status === 400) {
+      // data.code = 400201 = message: "Target user is not on banned user list."
+      res.status(200).send({ ...data, isBanned: data.code === 400201 ? false : isBanned })
+    } else {
+      res.status(response.status).send(data)
+    }
   } catch (error) {
     res.status(400).send({ error: true, message: 'There was an error while processing request.' })
   }
 }
 
 module.exports.getMute = async (req, res) => {
-  const { userId, channelUrl } = req.query
+  const { userId, type, channelUrl } = req.query
 
   try {
-    const response = await fetch(`https://api-${APP_ID}.sendbird.com/v3/group_channels/${channelUrl}/mute/${userId}`, {
+    const response = await fetch(`https://api-${APP_ID}.sendbird.com/v3/${type}/${channelUrl}/mute/${userId}`, {
       method: 'GET',
       headers: { 'Api-Token': API_TOKEN }
     })
@@ -54,10 +63,10 @@ module.exports.getMute = async (req, res) => {
 }
 
 module.exports.mute = async (req, res) => {
-  const { isMuted, userId, channelUrl } = req.body
+  const { isMuted, userId, type, channelUrl } = req.body
 
   try {
-    const response = await fetch(`https://api-${APP_ID}.sendbird.com/v3/group_channels/${channelUrl}/mute${isMuted ? `/${userId}` : ''}`, {
+    const response = await fetch(`https://api-${APP_ID}.sendbird.com/v3/${type}/${channelUrl}/mute${isMuted ? `/${userId}` : ''}`, {
       method: isMuted ? 'DELETE' : 'POST',
       headers: { 'Api-Token': API_TOKEN },
       body: isMuted ? undefined : JSON.stringify({ user_id: userId })

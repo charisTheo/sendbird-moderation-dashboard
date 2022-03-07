@@ -3,7 +3,7 @@ import { LoadingButton } from '@mui/lab';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { getAuthHeaders } from '../utils';
 
-const DeleteMessageButton = ({ message, channel }) => {
+const DeleteMessageButton = ({ message, channel, channelType }) => {
   if (!message) {
     return null
   }
@@ -11,7 +11,7 @@ const DeleteMessageButton = ({ message, channel }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const checkDeleted = async () => {
-    const response = await fetch(`/api/messages/?type=${'group_channels'}&channelUrl=${channel.channel_url}&messageId=${message.message_id}`, {
+    const response = await fetch(`/api/messages/?type=${channelType}&channelUrl=${channel.channel_url}&messageId=${message.message_id}`, {
       mathod: 'GET',
       headers: getAuthHeaders()
     });
@@ -34,7 +34,7 @@ const DeleteMessageButton = ({ message, channel }) => {
       method: 'DELETE',
       headers: getAuthHeaders(),
       body: JSON.stringify({
-        type: 'group_channels',
+        type: channelType,
         channelUrl: channel.channel_url,
         messageId: message.message_id
       })

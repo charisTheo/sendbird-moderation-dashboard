@@ -4,7 +4,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import BlockIcon from '@mui/icons-material/Block';
 import { getAuthHeaders } from '../utils';
 
-const BanButton = ({ user, channel }) => {
+const BanButton = ({ user, channel, channelType }) => {
   if (!user) {
     return null
   }
@@ -12,7 +12,7 @@ const BanButton = ({ user, channel }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const checkBan = async () => {
-    const response = await fetch(`/api/ban?channelUrl=${channel.channel_url}&userId=${user.user_id}`, {
+    const response = await fetch(`/api/ban?type=${channelType}&channelUrl=${channel.channel_url}&userId=${user.user_id}`, {
       mathod: 'GET',
       headers: getAuthHeaders()
     });
@@ -36,6 +36,7 @@ const BanButton = ({ user, channel }) => {
       method: 'POST',
       body: JSON.stringify({
         userId: user.user_id,
+        type: channelType,
         channelUrl: channel.channel_url,
         isBanned
       }),

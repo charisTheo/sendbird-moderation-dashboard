@@ -23,6 +23,9 @@ import { DASHBOARD_LINK_TYPES } from '../utils/constants';
 
 const ReportTableRow = ({ type, report }) => {
   const [open, setOpen] = useState(false);
+  const channelType = 'members' in report.channel
+    ? DASHBOARD_LINK_TYPES.GROUP_CHANNELS
+    : DASHBOARD_LINK_TYPES.OPEN_CHANNELS;
 
   return (
     <>
@@ -51,7 +54,7 @@ const ReportTableRow = ({ type, report }) => {
           {type === 'channel'
             ? <Link
               target="_blank"
-              onClick={() => openInDashboard(DASHBOARD_LINK_TYPES.GROUP_CHANNELS, report.channel.channel_url)}
+              onClick={() => openInDashboard(channelType, report.channel.channel_url)}
             >
               {report.channel.name}
             </Link>
@@ -82,7 +85,7 @@ const ReportTableRow = ({ type, report }) => {
                   type="link"
                   variant="contained"
                   component={RouterLink}
-                  to={`profanity/${report.channel.channel_url}`}
+                  to={`profanity/${report.channel.channel_url}#channelType=${channelType}`}
                 >
                   Channel profanities
                 </Button>
@@ -92,7 +95,7 @@ const ReportTableRow = ({ type, report }) => {
                   type="link"
                   variant="contained"
                   target="_blank"
-                  onClick={() => openInDashboard(DASHBOARD_LINK_TYPES.GROUP_CHANNELS, report.channel.channel_url)}
+                  onClick={() => openInDashboard(channelType, report.channel.channel_url)}
                 >
                   View channel↗
                 </Button>
@@ -117,18 +120,18 @@ const ReportTableRow = ({ type, report }) => {
             <blockquote>{report.report_description}</blockquote>
             <Grid container sx={{ m: 2 }} spacing={2} justifyContent='center'>
               <Grid item>
-                <MuteButton user={report.offending_user} channel={report.channel} />
+                <MuteButton user={report.offending_user} channel={report.channel} channelType={channelType} />
               </Grid>
               <Grid item>
-                <BanButton user={report.offending_user} channel={report.channel} />
+                <BanButton user={report.offending_user} channel={report.channel} channelType={channelType} />
               </Grid>
               {report.reported_message && (
                 <Grid item>
-                  <DeleteMessageButton message={report.reported_message} channel={report.channel} />
+                  <DeleteMessageButton message={report.reported_message} channel={report.channel} channelType={channelType} />
                 </Grid>
               )}
               <Grid item>
-                <FreezeButton channel={report.channel} />
+                <FreezeButton channel={report.channel} channelType={channelType} />
               </Grid>
             </Grid>
           </Collapse>

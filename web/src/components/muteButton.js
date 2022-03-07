@@ -4,7 +4,7 @@ import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { getAuthHeaders } from '../utils';
 
-const MuteButton = ({ user, channel }) => {
+const MuteButton = ({ user, channel, channelType }) => {
   if (!user) {
     return null
   }
@@ -12,7 +12,7 @@ const MuteButton = ({ user, channel }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const checkMute = async () => {
-    const response = await fetch(`/api/mute?channelUrl=${channel.channel_url}&userId=${user.user_id}`, {
+    const response = await fetch(`/api/mute?type=${channelType}&channelUrl=${channel.channel_url}&userId=${user.user_id}`, {
       mathod: 'GET',
       headers: getAuthHeaders()
     });
@@ -34,6 +34,7 @@ const MuteButton = ({ user, channel }) => {
       method: 'POST',
       body: JSON.stringify({
         userId: user.user_id,
+        type: channelType,
         channelUrl: channel.channel_url,
         isMuted
       }),

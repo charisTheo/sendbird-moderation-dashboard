@@ -4,12 +4,12 @@ import MessageIcon from '@mui/icons-material/Message';
 import SpeakerNotesOffIcon from '@mui/icons-material/SpeakerNotesOff';
 import { getAuthHeaders } from '../utils';
 
-const FreezeButton = ({ channel }) => {
+const FreezeButton = ({ channel, channelType }) => {
   const [isFrozen, setIsFrozen] = useState(channel.freeze);
   const [isLoading, setIsLoading] = useState(true);
 
   const checkFreeze = async () => {
-    const response = await fetch(`/api/channels/?type=${'group_channels'}&channelUrl=${channel.channel_url}`, {
+    const response = await fetch(`/api/channels/?type=${channelType}&channelUrl=${channel.channel_url}`, {
       mathod: 'GET',
       headers: getAuthHeaders()
     });
@@ -29,7 +29,7 @@ const FreezeButton = ({ channel }) => {
     const response = await fetch(`/api/freeze`, {
       method: 'PUT',
       body: JSON.stringify({
-        type: 'group_channels',
+        type: channelType,
         freeze: !isFrozen,
         channelUrl: channel.channel_url
       }),

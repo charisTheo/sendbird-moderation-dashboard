@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper';
 import { CircularProgress, Typography } from '@mui/material';
 import ProfanityMessagesTableRow from './profanityMessagesTableRow';
 
-const ProfanityMessagesTable = ({channelUrl, messages, isLoading}) => {
+const ProfanityMessagesTable = ({ channelUrl, messages, isLoading, channelType }) => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -33,7 +33,7 @@ const ProfanityMessagesTable = ({channelUrl, messages, isLoading}) => {
         Messages containing profanities
       </Typography>
 
-      <TableContainer component={Paper} elevation={3} sx={{mb: '2rem'}}>
+      <TableContainer component={Paper} elevation={3} sx={{ mb: '2rem' }}>
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
@@ -47,17 +47,22 @@ const ProfanityMessagesTable = ({channelUrl, messages, isLoading}) => {
           </TableHead>
           <TableBody>
             {!isLoading && messages.slice(rowsPerPage * page, rowsPerPage * page + rowsPerPage).map((m, i) =>
-              <ProfanityMessagesTableRow key={'message-' + i} message={m} channel_url={channelUrl} />
+              <ProfanityMessagesTableRow
+                key={'message-' + i}
+                message={m}
+                channel_url={channelUrl}
+                channelType={channelType}
+              />
             )}
           </TableBody>
         </Table>
 
         {isLoading
           && <CircularProgress
-              color='primary'
-              sx={{m: '2rem auto 0'}}
-              style={{display: 'block'}}
-            />
+            color='primary'
+            sx={{ m: '2rem auto 0' }}
+            style={{ display: 'block' }}
+          />
         }
 
         <TablePagination

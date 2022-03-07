@@ -20,7 +20,7 @@ import { openInDashboard } from '../utils';
 import { DASHBOARD_LINK_TYPES } from '../utils/constants';
 
 
-const ProfanityMessagesTableRow = ({ message, channel_url }) => {
+const ProfanityMessagesTableRow = ({ message, channel_url, channelType }) => {
   const [open, setOpen] = useState(false);
   const [visible, setVisibility] = useState(false);
 
@@ -68,10 +68,18 @@ const ProfanityMessagesTableRow = ({ message, channel_url }) => {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Grid container sx={{ m: 2 }} spacing={2} justifyContent='center'>
-              <Grid item><MuteButton user={{ user_id: message.user_id }} channel={{ channel_url }} /></Grid>
-              <Grid item><BanButton user={{ user_id: message.user_id }} channel={{ channel_url }} /></Grid>
-              <Grid item><DeleteMessageButton message={message} channel={{ channel_url }} /></Grid>
-              <Grid item><FreezeButton channel={{ channel_url }} /></Grid>
+              <Grid item>
+                <MuteButton user={{ user_id: message.user_id }} channel={{ channel_url }} channelType={channelType} />
+              </Grid>
+              <Grid item>
+                <BanButton user={{ user_id: message.user_id }} channel={{ channel_url }} channelType={channelType} />
+              </Grid>
+              <Grid item>
+                <DeleteMessageButton message={message} channel={{ channel_url }} channelType={channelType} />
+              </Grid>
+              <Grid item>
+                <FreezeButton channel={{ channel_url }} channelType={channelType} />
+              </Grid>
             </Grid>
           </Collapse>
         </TableCell>
