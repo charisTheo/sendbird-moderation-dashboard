@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Avatar,
   Divider,
   Drawer,
   IconButton,
@@ -17,10 +18,10 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { ExitToApp } from '@mui/icons-material';
 import routes from './../routes';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { isLoggedIn, logout } from '../utils';
+import { getLoginDetails, isLoggedIn, logout } from '../utils';
 import SBLogo from './../img/sendbird-logo.svg'
 
-const NavItemsList = ({setOpen}) => {
+const NavItemsList = ({ setOpen }) => {
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -49,10 +50,10 @@ const NavItemsList = ({setOpen}) => {
           <ListItemText primary={'Logout'} />
         </ListItem>
       }
-      {routes.map(({path, label, icon}) => (
+      {routes.map(({ path, label, icon }) => (
         isLoggedIn() && path === '/login'
-        ? <React.Fragment key='-'></React.Fragment>
-        : <ListItem
+          ? <React.Fragment key='-'></React.Fragment>
+          : <ListItem
             button
             key={path}
             selected={location.pathname === path}
@@ -73,17 +74,19 @@ const NavItemsList = ({setOpen}) => {
 
 const Nav = ({ toggleTheme, themeMode }) => {
   const [open, setOpen] = useState(false);
+  const auth = getLoginDetails();
 
   return (
     <React.Fragment>
-      <AppBar sx={{px: '1rem'}} position="sticky">
+      <AppBar sx={{ px: '1rem' }} position="sticky">
         <IconButton color='inherit' onClick={() => setOpen(!open)}>
           <MenuIcon />
         </IconButton>
+        {auth && auth.profileUrl && <Avatar sx={{ ml: 2 }} alt={auth.userId} src={auth.profileUrl} />}
 
-        <div style={{flex: 1}} />
+        <div style={{ flex: 1 }} />
 
-        <IconButton color='inherit' onClick={toggleTheme} sx={{mr: 2}}>
+        <IconButton color='inherit' onClick={toggleTheme} sx={{ mr: 2 }}>
           {themeMode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
         </IconButton>
 
@@ -105,7 +108,7 @@ const Nav = ({ toggleTheme, themeMode }) => {
         open={open}
         onClose={() => setOpen(false)}
       >
-        <div style={{textAlign: 'right'}}>
+        <div style={{ textAlign: 'right' }}>
           <IconButton color='primary' onClick={() => setOpen(false)}>
             <ChevronLeftIcon />
           </IconButton>

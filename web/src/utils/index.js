@@ -36,13 +36,14 @@ export async function logout() {
  * @param {Object} auth
  * @param {String} auth.userId
  * @param {String} auth.sessionToken
+ * @param {String} auth.profileUrl
  */
 export function setLoginDetails(auth) {
   localStorage.setItem('auth', JSON.stringify(auth))
 }
 
 /**
- * @returns {Object|null} {userId}
+ * @returns {Object|null} {userId, sessionToken, profileUrl}
  */
 export function getLoginDetails() {
   return JSON.parse(localStorage.getItem('auth') || 'null')

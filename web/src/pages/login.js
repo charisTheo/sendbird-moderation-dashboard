@@ -30,9 +30,7 @@ const LoginPage = ({ title }) => {
           setError(message)
         } else {
           const { token, profileUrl } = await response.json()
-          // TODO render profile URL in top nav
-          console.log("🚀 ~ file: login.js ~ line 33 ~ onSubmit ~ profileUrl", profileUrl)
-          setLoginDetails({ userId, sessionToken: token })
+          setLoginDetails({ userId, sessionToken: token, profileUrl })
           navigate('/')
         }
       } catch (e) {
