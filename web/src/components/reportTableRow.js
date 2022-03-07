@@ -12,13 +12,14 @@ import {
 } from '@mui/material';
 import Moment from 'react-moment';
 import { Link as RouterLink } from 'react-router-dom'
-import { getLinkToGroupChannel, getLinkToUser } from '../utils';
+import { openInDashboard } from '../utils';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MuteButton from './muteButton';
 import BanButton from './banButton';
 import FreezeButton from './freezeButton';
 import DeleteMessageButton from './deleteMessageButton';
+import { DASHBOARD_LINK_TYPES } from '../utils/constants';
 
 const ReportTableRow = ({ type, report }) => {
   const [open, setOpen] = useState(false);
@@ -27,7 +28,6 @@ const ReportTableRow = ({ type, report }) => {
     <>
       <TableRow
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-        onClick={() => setOpen(!open)}
         hover
       >
         <TableCell>
@@ -40,19 +40,28 @@ const ReportTableRow = ({ type, report }) => {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          <Link target="_blank" href={getLinkToUser(report.reporting_user?.user_id)}>
+          <Link
+            target="_blank"
+            onClick={() => openInDashboard(DASHBOARD_LINK_TYPES.USERS, report.reporting_user?.user_id)}
+          >
             {report.reporting_user?.user_id}
           </Link>
         </TableCell>
         <TableCell>
           {type === 'channel'
-            ? <Link target="_blank" href={getLinkToGroupChannel(report.channel.channel_url)}>
-                {report.channel.name}
-              </Link>
-            : <Link target="_blank" href={getLinkToUser(report.offending_user?.user_id)}>
-                {report.offending_user?.user_id}
-              </Link>
-            }
+            ? <Link
+              target="_blank"
+              onClick={() => openInDashboard(DASHBOARD_LINK_TYPES.GROUP_CHANNELS, report.channel.channel_url)}
+            >
+              {report.channel.name}
+            </Link>
+            : <Link
+              target="_blank"
+              onClick={() => openInDashboard(DASHBOARD_LINK_TYPES.USERS, report.offending_user?.user_id)}
+            >
+              {report.offending_user?.user_id}
+            </Link>
+          }
         </TableCell>
         <TableCell><Moment>{report.created_at * 1000}</Moment></TableCell>
         <TableCell>
@@ -64,7 +73,7 @@ const ReportTableRow = ({ type, report }) => {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Typography variant="h5" component='h3' sx={{mt: 2, mb: 1}}>
+            <Typography variant="h5" component='h3' sx={{ mt: 2, mb: 1 }}>
               Channel name: <i>"{report.channel.name}"</i>
             </Typography>
             <Grid container spacing={2}>
@@ -83,7 +92,7 @@ const ReportTableRow = ({ type, report }) => {
                   type="link"
                   variant="contained"
                   target="_blank"
-                  href={getLinkToGroupChannel(report.channel.channel_url)}
+                  onClick={() => openInDashboard(DASHBOARD_LINK_TYPES.GROUP_CHANNELS, report.channel.channel_url)}
                 >
                   View channel↗
                 </Button>
@@ -92,7 +101,7 @@ const ReportTableRow = ({ type, report }) => {
 
             {type === 'message' && (
               <>
-                <Typography variant="h5" component='h3' sx={{mt: 2, mb: 1}}>
+                <Typography variant="h5" component='h3' sx={{ mt: 2, mb: 1 }}>
                   Reported message: {report.reported_message?.file?.url
                     && <Link target="_blank" href={report.reported_message.file.url}>file</Link>
                   }
@@ -102,11 +111,11 @@ const ReportTableRow = ({ type, report }) => {
                 )}
               </>
             )}
-            <Typography variant="h5" component='h3' sx={{mt: 2, mb: 1}}>
+            <Typography variant="h5" component='h3' sx={{ mt: 2, mb: 1 }}>
               Description:
             </Typography>
             <blockquote>{report.report_description}</blockquote>
-            <Grid container sx={{m: 2}} spacing={2} justifyContent='center'>
+            <Grid container sx={{ m: 2 }} spacing={2} justifyContent='center'>
               <Grid item>
                 <MuteButton user={report.offending_user} channel={report.channel} />
               </Grid>

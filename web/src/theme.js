@@ -79,6 +79,7 @@ function getTheme(mode) {
       MuiLink: {
         styleOverrides: {
           root: {
+            cursor: 'pointer',
             '&[target="_blank"]::after': {
               content: '"↗"',
               display: 'inline-block',

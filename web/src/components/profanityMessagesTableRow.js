@@ -16,7 +16,8 @@ import MuteButton from './muteButton';
 import BanButton from './banButton';
 import FreezeButton from './freezeButton';
 import DeleteMessageButton from './deleteMessageButton';
-import { getLinkToUser } from '../utils';
+import { openInDashboard } from '../utils';
+import { DASHBOARD_LINK_TYPES } from '../utils/constants';
 
 
 const ProfanityMessagesTableRow = ({ message, channel_url }) => {
@@ -29,19 +30,22 @@ const ProfanityMessagesTableRow = ({ message, channel_url }) => {
     <>
       <TableRow
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-        onClick={() => setOpen(!open)}
         hover
       >
         <TableCell>
           <IconButton
             aria-label="expand row"
             size="small"
+            onClick={() => setOpen(!open)}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          <Link target="_blank" href={getLinkToUser(message.user_id)}>{message.user_id}</Link>
+          <Link
+            target="_blank"
+            onClick={() => openInDashboard(DASHBOARD_LINK_TYPES.USERS, message.user_id)}
+          >{message.user_id}</Link>
         </TableCell>
         <TableCell>{message.blocked_text}</TableCell>
         <TableCell>{message.replaced_text}</TableCell>
@@ -63,11 +67,11 @@ const ProfanityMessagesTableRow = ({ message, channel_url }) => {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Grid container sx={{m: 2}} spacing={2} justifyContent='center'>
-              <Grid item><MuteButton user={{user_id: message.user_id}} channel={{channel_url}} /></Grid>
-              <Grid item><BanButton user={{user_id: message.user_id}} channel={{channel_url}} /></Grid>
-              <Grid item><DeleteMessageButton message={message} channel={{channel_url}} /></Grid>
-              <Grid item><FreezeButton channel={{channel_url}} /></Grid>
+            <Grid container sx={{ m: 2 }} spacing={2} justifyContent='center'>
+              <Grid item><MuteButton user={{ user_id: message.user_id }} channel={{ channel_url }} /></Grid>
+              <Grid item><BanButton user={{ user_id: message.user_id }} channel={{ channel_url }} /></Grid>
+              <Grid item><DeleteMessageButton message={message} channel={{ channel_url }} /></Grid>
+              <Grid item><FreezeButton channel={{ channel_url }} /></Grid>
             </Grid>
           </Collapse>
         </TableCell>

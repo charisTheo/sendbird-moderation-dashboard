@@ -55,19 +55,3 @@ npm run build
 ```
 
 > The output of the build command above will be under the `./docs` directory of the project root directory.
-
-### Public URL
-
-To configure the public URL of the [`react-router`](https://reactrouter.com/) used, do the following:
-
-1. Create an `.env` file at the root of the directory and add this:
-
-```
-PUBLIC_URL="/your-public-path"
-```
-
-2. Change the `homepage` field inside of the `package.json` file:
-
-```json
-"homepage": "/your-public-path",
-```

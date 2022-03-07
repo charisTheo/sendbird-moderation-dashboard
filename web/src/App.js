@@ -24,9 +24,9 @@ export default function App() {
       <Container
         disableGutters={true}
         maxWidth={false}
-        classes={{root: 'app-container'}}
+        classes={{ root: 'app-container' }}
       >
-        <Router basename={process.env.PUBLIC_URL || ''}>
+        <Router>
           <Nav toggleTheme={onToggleTheme} themeMode={mode} />
           <Routes>
             {routes.map(route => (

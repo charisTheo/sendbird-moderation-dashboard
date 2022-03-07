@@ -5,12 +5,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PageContainer from '../components/pageContainer';
 import ProfanityFilters from '../components/profanityFilters';
 import ProfanityMessagesTable from '../components/profanityMessagesTable';
-import { getLinkToGroupChannel, getLoginDetails } from '../utils';
+import { getAuthHeaders, openInDashboard } from '../utils';
+import { DASHBOARD_LINK_TYPES } from '../utils/constants';
 
 const PAGINATION = 15 // default
 
 const ProfanityPage = ({ title }) => {
-  const auth = getLoginDetails()
   const navigate = useNavigate()
   const { channelUrl: channelUrlParam } = useParams()
   const [channelUrl, setChannelUrl] = useState(channelUrlParam)
@@ -34,22 +34,16 @@ const ProfanityPage = ({ title }) => {
   }, [])
 
   const fetchMessages = useCallback(async () => {
-    if (!auth) {
-      return;
-    }
     setIsLoading(true)
-
     // filter by datetime range and timeline reference
     const message_ts = date?.value ? date.value.valueOf() : moment() // now default
     const paginationLimit = `${date?.timeline === 'after' ? 'next_limit' : 'prev_limit'}=${PAGINATION}` // prev_limit default
-
-    // Docs: https://sendbird.com/docs/chat/v3/platform-api/guides/report-content-and-subject#2-list-moderated-messages
-    var url = `https://api-${auth.appId}.sendbird.com/v3/report/group_channels/${channelUrl}/profanity_messages?message_ts=${message_ts.valueOf()}&${paginationLimit}`
+    const url = `/api/profanities?channel_url=${channelUrl}&message_ts=${message_ts.valueOf()}&${paginationLimit}`
 
     try {
       const response = await fetch(url, {
         method: 'GET',
-        headers: { 'Api-Token': auth.apiToken }
+        headers: getAuthHeaders()
       })
       const data = await response.json();
       if (response.status === 200) {
@@ -72,8 +66,8 @@ const ProfanityPage = ({ title }) => {
       <Alert
         severity="error"
         color="error"
-        sx={{mx: 'auto', mb: 2}}
-        style={{width: 'fit-content', visibility: error ? 'visible' : 'hidden'}}
+        sx={{ mx: 'auto', mb: 2 }}
+        style={{ width: 'fit-content', visibility: error ? 'visible' : 'hidden' }}
       >{error}</Alert>
 
       <Grid container spacing={2} alignItems='center' justifyContent='center'>
@@ -96,7 +90,7 @@ const ProfanityPage = ({ title }) => {
         <Grid
           container
           direction='column'
-          sx={{my: 2}}
+          sx={{ my: 2 }}
           spacing={2}
           alignItems='center'
 
@@ -110,7 +104,7 @@ const ProfanityPage = ({ title }) => {
           </Grid>
           <Grid item>
             <Button
-              href={getLinkToGroupChannel(channelUrl)}
+              onClick={() => openInDashboard(DASHBOARD_LINK_TYPES.GROUP_CHANNELS, channelUrl)}
               target="_blank"
               type="link"
               variant="outlined"
