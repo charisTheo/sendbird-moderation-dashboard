@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import { getLoginDetails } from '../utils';
+import { getAuthHeaders } from '../utils';
 
 const MuteButton = ({ user, channel }) => {
   if (!user) {
@@ -10,15 +10,13 @@ const MuteButton = ({ user, channel }) => {
   }
   const [isMuted, setIsMuted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const auth = getLoginDetails()
 
   const checkMute = async () => {
-    const response = await fetch(`
-      https://api-${auth.appId}.sendbird.com/v3/group_channels/${channel.channel_url}/mute/${user.user_id}
-    `, {
+    const response = await fetch(`/api/mute?channelUrl=${channel.channel_url}&userId=${user.user_id}`, {
       mathod: 'GET',
-      headers: { 'Api-Token': auth.apiToken }
+      headers: getAuthHeaders()
     });
+
     const data = await response.json();
     if (response.status === 200) {
       setIsMuted(data.is_muted);
@@ -32,17 +30,20 @@ const MuteButton = ({ user, channel }) => {
 
   const handleMuteToggle = async () => {
     setIsLoading(true);
-    const response = await fetch(`
-      https://api-${auth.appId}.sendbird.com/v3/group_channels/${channel.channel_url}/mute${isMuted ? '/' + user.user_id : ''}
-    `, {
-      method: isMuted ? 'DELETE' : 'POST',
-      headers: { 'Api-Token': auth.apiToken },
-      body: isMuted ? undefined : JSON.stringify({user_id: user.user_id})
-    });
+    const response = await fetch(`/api/mute`, {
+      method: 'POST',
+      body: JSON.stringify({
+        userId: user.user_id,
+        channelUrl: channel.channel_url,
+        isMuted
+      }),
+      headers: getAuthHeaders(),
+    })
+
+    const data = await response.json();
     if (response.status === 200) {
-      setIsMuted(!isMuted);
+      setIsMuted(data.isMuted);
     } else {
-      const data = await response.json();
       console.error(data);
     }
     setIsLoading(false);

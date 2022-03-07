@@ -76,6 +76,16 @@ function getTheme(mode) {
           }
         }
       },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            '&[disabled]': {
+              cursor: 'not-allowed',
+              pointerEvents: 'initial'
+            }
+          }
+        }
+      },
       MuiLink: {
         styleOverrides: {
           root: {

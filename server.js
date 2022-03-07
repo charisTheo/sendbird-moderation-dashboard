@@ -4,7 +4,6 @@ const path = require('path');
 const express = require('express')
 const bodyParser = require('body-parser');
 const routes = require('./routes');
-const { redirects } = require('./controllers');
 
 const app = express()
 const port = process.env.PORT || 8080

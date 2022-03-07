@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { LoadingButton } from '@mui/lab';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { getLoginDetails } from '../utils';
+import { getAuthHeaders } from '../utils';
 
-const DeleteMessageButton = ({message, channel}) => {
+const DeleteMessageButton = ({ message, channel }) => {
   if (!message) {
     return null
   }
   const [isDeleted, setIsDeleted] = useState(message.is_removed);
   const [isLoading, setIsLoading] = useState(false);
-  const auth = getLoginDetails()
 
   const checkDeleted = async () => {
-    const response = await fetch(`
-      https://api-${auth.appId}.sendbird.com/v3/group_channels/${channel.channel_url}/messages/${message.message_id}
-    `, {
+    const response = await fetch(`/api/messages/?type=${'group_channels'}&channelUrl=${channel.channel_url}&messageId=${message.message_id}`, {
       mathod: 'GET',
-      headers: { 'Api-Token': auth.apiToken }
+      headers: getAuthHeaders()
     });
     const data = await response.json();
     if (response.status === 200) {
@@ -33,11 +30,14 @@ const DeleteMessageButton = ({message, channel}) => {
 
   const handleMessageDelete = async () => {
     setIsLoading(true);
-    const response = await fetch(`
-      https://api-${auth.appId}.sendbird.com/v3/group_channels/${channel.channel_url}/messages/${message.message_id}
-    `, {
+    const response = await fetch(`/api/messages`, {
       method: 'DELETE',
-      headers: { 'Api-Token': auth.apiToken }
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        type: 'group_channels',
+        channelUrl: channel.channel_url,
+        messageId: message.message_id
+      })
     });
     if (response.status === 200) {
       setIsDeleted(true);

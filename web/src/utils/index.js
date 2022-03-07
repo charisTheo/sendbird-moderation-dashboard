@@ -74,6 +74,7 @@ export function getAuthHeaders() {
   const auth = getLoginDetails()
   return {
     'Authorization': `Bearer ${auth?.sessionToken || ''}`,
-    'sbuserid': auth?.userId || ''
+    'sbuserid': auth?.userId || '',
+    'Content-Type': 'application/json'
   }
 }

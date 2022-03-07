@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import DoneIcon from '@mui/icons-material/Done';
 import BlockIcon from '@mui/icons-material/Block';
-import { getLoginDetails } from '../utils';
+import { getAuthHeaders } from '../utils';
 
 const BanButton = ({ user, channel }) => {
   if (!user) {
@@ -10,19 +10,18 @@ const BanButton = ({ user, channel }) => {
   }
   const [isBanned, setIsBanned] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const auth = getLoginDetails()
 
   const checkBan = async () => {
-    const response = await fetch(`
-      https://api-${auth.appId}.sendbird.com/v3/group_channels/${channel.channel_url}/ban/${user.user_id}
-    `, {
+    const response = await fetch(`/api/ban?channelUrl=${channel.channel_url}&userId=${user.user_id}`, {
       mathod: 'GET',
-      headers: { 'Api-Token': auth.apiToken }
+      headers: getAuthHeaders()
     });
     if (response.status === 200) {
-      setIsBanned(true);
+      const { isBanned } = await response.json();
+      setIsBanned(isBanned);
     } else if (response.status === 400) {
-      setIsBanned(false);
+      const { message } = await response.json();
+      alert(message);
     } else {
       console.error(response);
     }
@@ -33,17 +32,20 @@ const BanButton = ({ user, channel }) => {
 
   const handleBanToggle = async () => {
     setIsLoading(true);
-    const response = await fetch(`
-      https://api-${auth.appId}.sendbird.com/v3/group_channels/${channel.channel_url}/ban${isBanned ? '/' + user.user_id : ''}
-    `, {
-      method: isBanned ? 'DELETE' : 'POST',
-      headers: { 'Api-Token': auth.apiToken },
-      body: isBanned ? undefined : JSON.stringify({user_id: user.user_id})
-    });
+    const response = await fetch(`/api/ban`, {
+      method: 'POST',
+      body: JSON.stringify({
+        userId: user.user_id,
+        channelUrl: channel.channel_url,
+        isBanned
+      }),
+      headers: getAuthHeaders(),
+    })
+
+    const data = await response.json();
     if (response.status === 200) {
-      setIsBanned(!isBanned);
+      setIsBanned(data.isBanned);
     } else {
-      const data = await response.json();
       console.error(data);
     }
     setIsLoading(false);
