@@ -1,5 +1,7 @@
 # Sendbird Moderation Dashboard
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 > This is a sample app that acts as a moderation dashboard for all **reported items, like users, messages and channels**, within a Sendbird Application and any **profanity filtered messages** within channels.
 
 _Built with the **Sendbird Platform API**. For more information about the API and its usage head to the [Report content and subject](https://sendbird.com/docs/chat/v3/platform-api/guides/report-content-and-subject) section of the Sendbird Platorm API Docs._

@@ -1,0 +1,20 @@
+{
+  "name": "Sendbird Moderation Dashboard",
+  "description": "Sample app that acts as a Sendbird moderation dashboard",
+  "repository": "https://github.com/charisTheo/sendbird-moderation-dashboard",
+  "logo": "https://sendbird.com/wp-content/themes/sendbird-sb/assets/img/ic-main-sendbird-logo-white.svg",
+  "keywords": [
+    "node",
+    "express",
+    "sendbird",
+    "react"
+  ],
+  "env": {
+    "APP_ID": {
+      "description": "Your Sendbird Application ID"
+    },
+    "API_TOKEN": {
+      "description": "Your API Token for Sendbird Application"
+    }
+  }
+}
