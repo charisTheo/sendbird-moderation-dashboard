@@ -10,11 +10,11 @@
     "react"
   ],
   "env": {
-    "APP_ID": {
-      "description": "Your Sendbird Application ID"
-    },
     "API_TOKEN": {
       "description": "Your API Token for Sendbird Application"
+    },
+    "APP_ID": {
+      "description": "Your Sendbird Application ID"
     }
   }
 }

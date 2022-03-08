@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "export NODE_ENV=development&& nodemon ./server.js",
-    "start": "export NODE_ENV=production&& node server.js"
+    "start": "npm run build && cd ../ export NODE_ENV=production&& node server.js",
+    "build": "cd web && npm i && npm run build"
   },
   "repository": {
     "type": "git",
