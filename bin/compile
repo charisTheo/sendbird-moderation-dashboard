@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-cd web
+cd ../web
+
+echo 'Navigated inside $pwd'
 
 echo 'Installing npm modules inside web/ directory...'
 
