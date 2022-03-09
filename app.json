@@ -9,6 +9,11 @@
     "sendbird",
     "react"
   ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-inline.git"
+    }
+  ],
   "env": {
     "API_TOKEN": {
       "description": "Your API Token for Sendbird Application"
