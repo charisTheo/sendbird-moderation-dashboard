@@ -2,15 +2,9 @@
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-> This is a sample app that acts as a moderation dashboard for all **reported items, like users, messages and channels**, within a Sendbird Application and any **profanity filtered messages** within channels.
+> This is a sample app that acts as a moderation dashboard for all **reported items, like users, messages and channels**, within a Sendbird Application and any **profanity filtered messages** within both **Group and Open channels**.
 
 _Built with the **Sendbird Platform API**. For more information about the API and its usage head to the [Report content and subject](https://sendbird.com/docs/chat/v3/platform-api/guides/report-content-and-subject) section of the Sendbird Platorm API Docs._
-
-<h2 style="text-align: center">
-  <a href="https://charistheo.github.io/sendbird-moderation-dashboard/">
-    Live demo
-  </a>
-</h2>
 
 <p style="text-align: center">
   <img src="./demo-reports.png" alt="Dashboard reports page screenshot">
@@ -36,15 +30,27 @@ _Built with the **Sendbird Platform API**. For more information about the API an
 ```sh
 git clone https://github.com/charisTheo/sendbird-moderation-dashboard.git
 cd sendbird-moderation-dashboard
+git checkout node-server-auth
 ```
 
 ### Install
 
 ```sh
 npm i
+cd web && npm i
 ```
 
 ### Run
+
+#### From the root of the project
+
+```sh
+npm run dev
+```
+
+#### Within the `web/` directory
+
+> Run this command inside an additional terminal to the above.
 
 ```sh
 npm start
@@ -56,4 +62,4 @@ npm start
 npm run build
 ```
 
-> The output of the build command above will be under the `./docs` directory of the project root directory.
+> The output of the build command above will be under the `./web/build` directory.
