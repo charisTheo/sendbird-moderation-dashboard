@@ -2,7 +2,7 @@
   "name": "sendbird-moderation-dashboard",
   "version": "5.0.0",
   "private": true,
-  "proxy": "http://localhost:8080",
+  "proxy": "http://localhost:3000",
   "scripts": {
     "start": "react-scripts start",
     "build": "BUILD_PATH='./build' react-scripts build",
