@@ -33,13 +33,13 @@ module.exports.login = async (req, res) => {
 
 module.exports.logout = async (req, res) => {
   const { userId } = req.body
-  // use user ID and acces token to verify user
+  // use user ID and access token to verify user
   if (!userId) {
     res.status(400).send({ error: true, message: "User ID is required!" })
     return
   }
   // remove all session tokens for user
-  // Docs: https://sendbird.com/docs/chat/v3/platform-api/guides/user#2-revoke-all-session-tokens
+  // Docs: https://sendbird.com/docs/chat/v3/platform-api/user/managing-session-tokens/revoke-all-session-tokens
   const response = await fetch(`https://api-${APP_ID}.sendbird.com/v3/users/${userId}/token`, {
     method: 'DELETE',
     headers: { 'Api-Token': API_TOKEN }
