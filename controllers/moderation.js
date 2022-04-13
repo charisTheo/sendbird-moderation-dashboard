@@ -111,16 +111,13 @@ module.exports.freeze = async (req, res) => {
     });
     const data = await response.json();
     if (response.status === 200) {
-      console.log("🚀 200 freeze= ~ data", data)
       res.status(200).send(data)
     } else if (response.status === 400) {
-      console.log("🚀 400 freeze= ~ data", data)
       res.status(200).send(data)
     } else {
       res.status(response.status).send(data)
     }
   } catch (error) {
-    console.log("🚀 ~ file: actions.js ~ line 117 ~ module.exports.freeze= ~ error", error)
     res.status(400).send({ error: true, message: 'There was an error while processing request.' })
   }
 }
