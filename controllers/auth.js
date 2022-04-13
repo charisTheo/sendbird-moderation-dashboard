@@ -14,6 +14,9 @@ module.exports.login = async (req, res) => {
   sb.connect(userId, accessToken)
     .then(async user => {
       sb.disconnect();
+      if (!isModerator(user)) {
+        return res.status(400).send({ error: true, message: "Unauthorized! User is not a moderator." })
+      }
       // create a new session token and send to client
       const response = await fetch(`https://api-${APP_ID}.sendbird.com/v3/users/${userId}/token`, {
         method: 'POST',
@@ -50,4 +53,8 @@ module.exports.logout = async (req, res) => {
   } catch (error) {
     res.status(400).send({ error: true, message: 'There was an error while logging out. Try logging in again.' })
   }
+}
+
+function isModerator(user) {
+  return Boolean(user && user.metaData && user.metaData.moderator === 'true')
 }
