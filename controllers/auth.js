@@ -14,6 +14,7 @@ module.exports.login = async (req, res) => {
   sb.connect(userId, accessToken)
     .then(async user => {
       sb.disconnect();
+      // Only allow moderators to login
       if (!isModerator(user)) {
         return res.status(400).send({ error: true, message: "Unauthorized! User is not a moderator." })
       }
