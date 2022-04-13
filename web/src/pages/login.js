@@ -80,6 +80,7 @@ const LoginPage = ({ title }) => {
             value={accessToken}
             onChange={(e) => setAccessToken(e.target.value)}
             label="Access Token"
+            type='password'
           />
         </Grid>
         <Grid item>
