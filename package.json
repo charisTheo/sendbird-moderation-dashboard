@@ -1,34 +1,46 @@
 {
-  "name": "sendbird-moderation-dashboard-node",
-  "version": "1.0.0",
-  "description": "Sample app that acts as a Sendbird moderation dashboard",
-  "main": "server.js",
+  "name": "sendbird-moderation-dashboard",
+  "version": "5.0.0",
+  "private": true,
+  "proxy": "http://localhost:8080",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "export NODE_ENV=development&& nodemon ./server.js",
-    "start": "export NODE_ENV=production&& node server.js",
-    "build": "cd web && npm i && npm run build"
+    "start": "react-scripts start",
+    "build": "BUILD_PATH='./build' react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "watch": "npm-watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/charisTheo/sendbird-moderation-dashboard.git"
+  "watch": {
+    "build": "src/"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/charisTheo/sendbird-moderation-dashboard/issues"
-  },
-  "homepage": "https://github.com/charisTheo/sendbird-moderation-dashboard#readme",
   "dependencies": {
-    "body-parser": "^1.19.2",
-    "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "node-fetch": "^2.6.7",
-    "sendbird": "^3.1.8"
+    "@date-io/moment": "^2.13.1",
+    "@emotion/react": "latest",
+    "@emotion/styled": "latest",
+    "@mui/icons-material": "^5.3.1",
+    "@mui/lab": "^5.0.0-alpha.67",
+    "@mui/material": "latest",
+    "moment": "^2.29.1",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-moment": "^1.1.1",
+    "react-router-dom": "^6.2.1",
+    "react-scripts": "latest",
+    "sendbird": "^3.1.7"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
-    "nodemon": "^2.0.15",
     "npm-watch": "^0.11.0"
   }
 }
