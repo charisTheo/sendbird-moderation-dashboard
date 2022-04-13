@@ -23,6 +23,12 @@ _Built with the **Sendbird Platform API**. For more information about the API an
 * Delete reported messages
 * Freeze / Unfreeze channels
 
+## User authentication
+
+> ⚠️ This dashboard can be used by Sendbird users and provides successfull authentication _only_ for Sendbird users that have `{moderator: "true"}` inside their metadata.
+
+Head to [this part of the docs](https://sendbird.com/docs/chat/v3/platform-api/user/managing-metadata/user-create-metadata) on how to create and update user metadata.
+
 ## Development
 
 ### Download
