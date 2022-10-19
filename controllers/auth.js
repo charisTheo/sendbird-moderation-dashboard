@@ -1,6 +1,6 @@
 const SendBird = require("sendbird");
-require('dotenv').config()
 const fetch = require('node-fetch')
+require('dotenv').config()
 const APP_ID = process.env.APP_ID
 const API_TOKEN = process.env.API_TOKEN
 
