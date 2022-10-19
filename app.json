@@ -15,11 +15,7 @@
     }
   ],
   "env": {
-    "API_TOKEN": {
-      "description": "Your API Token for Sendbird Application"
-    },
-    "APP_ID": {
-      "description": "Your Sendbird Application ID"
-    }
+    "API_TOKEN": "11dac8e51c450c2657da3375c5e13c1ad63357eb",
+    "APP_ID":"F076E977-F9BD-41A7-B37B-9C1BD2D0D67E"
   }
 }
