@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   const { channel_url, message_ts, next_limit, prev_limit, type } = req.query
   const paginationLimit = next_limit ? `next_limit=${next_limit}` : `prev_limit=${prev_limit}`
 
-  // Docs: https://sendbird.com/docs/chat/v3/platform-api/guides/report-content-and-subject#2-list-moderated-messages
+  // Docs: https://sendbird.com/docs/chat/v3/platform-api/report/listing-reports/list-moderated-messages
   const url = `https://api-${APP_ID}.sendbird.com/v3/report/${type}/${channel_url}/profanity_messages?message_ts=${message_ts}&${paginationLimit}`
 
   try {

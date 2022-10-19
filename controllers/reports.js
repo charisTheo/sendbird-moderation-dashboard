@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   const { start_ts, end_ts } = req.query
   const reports = []
   async function getReports(_next = '') {
-    // Docs: https://sendbird.com/docs/chat/v3/platform-api/guides/report-content-and-subject#2-list-reports
+    // Docs: https://sendbird.com/docs/chat/v3/platform-api/report/listing-reports/list-reports
     var url = `https://api-${APP_ID}.sendbird.com/v3/report?limit=100`
     // filter by datetime range
     if (start_ts && end_ts) {

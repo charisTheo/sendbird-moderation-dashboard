@@ -1,7 +1,7 @@
 const SendBird = require("sendbird");
 const APP_ID = process.env.APP_ID
 
-module.exports.auth = (req, res, next) => {
+module.exports.authMiddleware = (req, res, next) => {
   try {
     const sessionToken = req.headers?.authorization?.replace("Bearer", "").trim()
     const userId = req.headers?.sbuserid
